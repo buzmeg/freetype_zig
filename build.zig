@@ -29,10 +29,10 @@ pub fn build(b: *std.Build) void {
     }
 
     lib.defineCMacro("HAVE_UNISTD_H", "1");
-    lib.addCSourceFiles(.{ .files = &sources, .flags = &.{} });
+    lib.addCSourceFiles(.{ .files = &sources, .flags = &.{"-fno-sanitize=undefined",} });
     if (target.result.os.tag == .macos) lib.addCSourceFile(.{
         .file = b.path("src/base/ftmac.c"),
-        .flags = &.{},
+        .flags = &.{"-fno-sanitize=undefined", },
     });
     lib.installHeadersDirectory(b.path("include/freetype"), "freetype", .{});
     lib.installHeader(b.path("include/ft2build.h"), "ft2build.h");
